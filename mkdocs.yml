@@ -1,0 +1,9 @@
+
+site_name: "javanardi"
+site_description: "javanardi"
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core

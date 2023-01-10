@@ -1,0 +1,23 @@
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "javanardi"
+  description: "javanardi"
+  links:
+    - url: https://api-javanardi-testjava2.empcbr.thoughtworks-labs.net/swagger-ui.html
+      title: javanardi
+      icon: dashboard
+  annotations:
+    circleci.com/project-slug: github/platform-dx/javanardi
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug:  platform-dx/javanardi
+    sonarqube.org/project-key: "javanardi"
+    backstage.io/kubernetes-label-selector: "app=javanardi"
+    backstage.io/adr-location: docs/adrs/
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "nardi"
+  providesApis:
+    - "javanardi"

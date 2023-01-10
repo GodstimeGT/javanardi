@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: javanardi-ingress
+  labels:
+    app: javanardi
+    backstage.io/kubernetes-id: javanardi 
+spec:
+  rules:
+    - host: api-javanardi-testjava2.empcbr.thoughtworks-labs.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: javanardi
+                port: 
+                  number: 80
+  tls:
+  - hosts:
+    - api-javanardi-testjava2.empcbr.thoughtworks-labs.net
+    secretName: letencryptkey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: javanardi
+  labels:
+    app: javanardi
+    backstage.io/kubernetes-id: javanardi
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: javanardi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: javanardi
+  labels:
+    app: javanardi
+    backstage.io/kubernetes-id: javanardi
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 5
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: javanardi
+  template:
+    metadata:
+      labels:
+        app: javanardi
+    spec:
+      containers:
+      - name: javanardi
+        image: 626109959667.dkr.ecr.us-east-1.amazonaws.com/javanardi:{image-tag}
+        ports:
+        - containerPort: 8080
